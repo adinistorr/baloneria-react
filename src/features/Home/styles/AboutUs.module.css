@@ -1,0 +1,43 @@
+.fullscreen-background {
+    background-image: url('../../../assets/images/background-emerald.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: -1px;
+    height: 75vh;
+    z-index: 10;
+}
+
+.sideImage {
+    position: absolute;
+    top: 95%;
+    left: -5%;
+    opacity: .6;
+    width: 480px;
+}
+
+.image-wave {
+    position: relative;
+    z-index: 30;
+}
+
+.wrapper-about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+.row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .fullscreen-background {
+        height: 60vh;
+    }
+    .sideImage {
+        display: none;
+    }
+}

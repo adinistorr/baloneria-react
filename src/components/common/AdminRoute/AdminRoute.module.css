@@ -1,0 +1,13 @@
+
+@media (min-width: 992px) {
+    .margin-content {
+        margin-left: 260px;
+        margin-top: 6em;
+        margin-bottom: 1em;
+    }
+}
+
+.margin-content {
+    /* margin-left: 0px; */
+    margin-top: 6em;
+}

@@ -1,0 +1,13 @@
+.alertMessageWrapper {
+    position: fixed !important;
+    bottom: 0;
+    z-index: 500;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+}
+
+.alertMessage {
+    min-width: 350px;
+    text-align: center;
+}

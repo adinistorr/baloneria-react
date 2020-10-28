@@ -1,0 +1,9 @@
+.header-typing-effect {
+    position: absolute;
+    z-index: 40;
+    top: calc(90% - 100px);
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    color: white;
+}

@@ -1,0 +1,100 @@
+img {
+    max-width: 100%;
+}
+
+.card-user .image img {
+    border-radius: 0.25rem;
+}
+
+.card .avatar {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 15px
+}
+
+.card .image {
+    overflow: hidden;
+    height: 200px;
+    position: relative
+}
+
+.card-user .image {
+    height: 130px;
+}
+
+.card-user .author {
+    text-align: center;
+    text-transform: none;
+    margin-top: -77px;
+}
+
+.card-user .avatar {
+    width: 124px;
+    height: 124px;
+    border: 1px solid #fff;
+    position: relative;
+}
+
+.title {
+    font-weight: 700;
+    color: #1DC7EA;
+}
+
+.h5, h5 {
+    font-size: 1.57em;
+    line-height: 1.4em;
+    margin-bottom: 15px;
+}
+
+.btn-azure {
+    color: #fff !important;
+    background-color: #1DC7EA !important;
+    border-color: #1DC7EA !important;
+}
+
+#file-input {
+    display: none;
+}
+
+.image-upload {
+    position: relative;
+    width: 124px;
+    height: 124px;
+    margin: 0 auto 1em auto;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.overlay-avatar {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    border-radius: 50%;
+    background-color: #008CBA;
+}
+
+.image-upload:hover .overlay-avatar {
+    cursor: pointer;
+    opacity: .8;
+}
+
+.text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}

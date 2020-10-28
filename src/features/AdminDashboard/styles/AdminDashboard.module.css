@@ -1,0 +1,92 @@
+/* ================= ADMIN ================== */
+
+.btnLogout {
+    position: absolute;
+    z-index: 200;
+    top: 2em;
+    right: 2em;
+}
+
+.btn-add {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    background-color: rgb(23, 162, 184) !important;
+    border-color: rgb(23, 162, 184) !important;
+    color: #fff !important;
+    border-radius: 2em !important;
+}
+
+.btn-add:hover {
+    background-color: rgb(23, 142, 184) !important;
+    border-color: rgb(23, 142, 184) !important;
+    font-size: 1.1em;
+    transition: ease-in .2s;
+}
+
+.admin .btn-delete {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: #fff !important;
+    margin: 0em .5em;
+}
+
+.admin .btn-update {
+    background-color: rgb(23, 162, 184) !important;
+    border-color: rgb(23, 162, 184) !important;
+    color: #fff !important;
+    margin: 0em .5em;
+}
+
+.admin .btn-update:hover {
+    background-color: rgb(23, 142, 184) !important;
+    border-color: rgb(23, 142, 184) !important;
+    transition: ease-in .2s;
+}
+
+.admin .portfolio-img {
+    height: 200px;
+    border-radius: 100px;
+    place-self: center;
+}
+
+.admin .offer-img {
+    height: 200px;
+    border-radius: 100px;
+    place-self: center;
+}
+
+.admin .review-img {
+    height: 200px;
+    border-radius: 100px;
+    place-self: center;
+}
+
+.admin .card-row {
+    flex-direction: row !important;
+}
+
+.admin .add-icon {
+    font-size: 1.2em;
+}
+
+.admin .margin-left-title {
+    margin-left: calc(50% - 2.5em);
+}
+
+.admin .disable-offer {
+    opacity: 0.3;
+}
+
+@media (max-width: 767px) {
+    .admin .card-row {
+        flex-direction: column !important;
+    }
+    .admin .center {
+        display: flex;
+        justify-content: center;
+    }
+}

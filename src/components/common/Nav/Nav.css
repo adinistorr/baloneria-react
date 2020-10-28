@@ -1,0 +1,69 @@
+body:contains-selector(.show) {
+    overflow: hidden;
+}
+
+nav.navbar {
+    padding: 1rem 3rem;
+    transition: all 0.4s ease;
+}
+
+.nav-link {
+    font-weight: 400;
+}
+
+.navbar-transparent {
+    background-color: transparent;
+}
+
+.navbar-default-color {
+    background-color: #ffffff;
+    padding: .4rem 3rem !important;
+    transition: all 0.4s ease;
+}
+
+.navbar-collapse.show {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 1);
+    overflow-y: hidden;
+    transition: all 0.5s ease;
+}
+
+.show .navbar-brand {
+    display: none;
+}
+
+.show.navbar-collapse {
+    justify-content: center !important;
+    line-height: 4em;
+}
+
+.close-nav-btn {
+    position: absolute;
+    top: 1rem;
+    right: 3rem;
+    width: 3.5rem;
+    height: 2.5rem;
+}
+
+.collapsing {
+    display: none;
+    transition: none;
+}
+
+.navbar-fixed {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    display: flex !important;
+    justify-content: flex-end !important;
+}
