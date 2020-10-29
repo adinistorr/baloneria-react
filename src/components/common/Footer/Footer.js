@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './Footer.module.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faInstagram, faFacebook} from '@fortawesome/free-brands-svg-icons';
@@ -8,6 +8,10 @@ import {Link} from 'react-router-dom';
 import {faMapMarkerAlt, faPhone, faEnvelope} from '@fortawesome/free-solid-svg-icons';
 
 export default function Footer() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <div className={styles.wrapper}>
             <footer className={styles.footer}>
@@ -50,24 +54,18 @@ export default function Footer() {
                                 <div className="row">
                                     <div className="col">
                                         <p>
-                                            <a className="scroll-link" href="/">
+                                            <a onClick={window.scrollTo(0, 0)} href="#">
                                                 Top
                                             </a>
                                         </p>
                                         <p>
-                                            <a className="scroll-link" href="/">
-                                                Section 1
-                                            </a>
+                                            <a href="/contact">Contact</a>
                                         </p>
                                         <p>
-                                            <a className="scroll-link" href="/">
-                                                Section 2
-                                            </a>
+                                            <a href="/oferte">Oferte</a>
                                         </p>
                                         <p>
-                                            <a className="scroll-link" href="/">
-                                                Section 3
-                                            </a>
+                                            <a href="/portofoliu">Portofoliu</a>
                                         </p>
                                     </div>
                                 </div>
