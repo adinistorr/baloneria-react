@@ -11,14 +11,18 @@ import {AuthContext} from '../../Auth/AuthContext';
 import DeleteModal from '../../../components/common/DeleteModal';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPen, faTrash, faToggleOn, faToggleOff} from '@fortawesome/free-solid-svg-icons';
+// import styles from '../styles/AdminDashboard.module.css';
 import styles from '../styles/AdminDashboard.module.css';
 import avatarDefault from '../../../assets/images/avatar-default.png';
+import {AlertMessageContext} from '../../../components/common/AlertMessageContext/AlertMessageContext';
 
 export default function Users() {
     const db = firebase.firestore();
     const history = useHistory();
     const [users, setUsers] = useState([]);
     const [userToDelete, setUserToDelete] = useState();
+
+    const {setAlertMessage} = useContext(AlertMessageContext);
 
     const {user, isAdmin} = useContext(AuthContext);
 
@@ -37,7 +41,11 @@ export default function Users() {
                         setUsers(userList);
                     },
                     error => {
-                        history.push('/not-allowed');
+                        if (error.code === 'permission-denied') {
+                            history.push('/not-allowed');
+                        } else {
+                            setAlertMessage({message: error.message, type: 'danger'});
+                        }
                     }
                 );
         }
@@ -51,10 +59,15 @@ export default function Users() {
             await db.collection('users').doc(user.id).update({
                 isActive: !user.isActive,
             });
-            console.log('Document successfully updated!');
+            setAlertMessage({
+                message: !user.isActive ? 'User is active' : 'User is disabled',
+                type: 'success',
+            });
         } catch (error) {
-            // The document probably doesn't exist.
-            console.error('Error updating document: ', error);
+            setAlertMessage({
+                message: error.message,
+                type: 'danger',
+            });
         }
     }
 
@@ -63,9 +76,15 @@ export default function Users() {
             await db.collection('users').doc(toDelete.id).delete();
             setUserToDelete(null);
             setUsers(users.filter(user => user !== toDelete));
-            console.log('Document successfully deleted!');
+            setAlertMessage({
+                message: 'User successfully deleted',
+                type: 'success',
+            });
         } catch (error) {
-            console.error('Error removing document: ', error);
+            setAlertMessage({
+                message: error.message,
+                type: 'danger',
+            });
         }
     }
 
@@ -85,48 +104,50 @@ export default function Users() {
 
                     {users.map(user => (
                         <div key={user.id}>
-                            <div className={`card mb-3 ${styles['card-row']}`} htmlFor={user.id}>
-                                <img
-                                    className={`${styles['user-img']} shadow-sm border border-light m-3`}
-                                    src={user.avatar || avatarDefault}
-                                    alt="user"
-                                    width="200"
-                                />
+                            <div className={`card mb-3 ${styles['card-row']} ${styles.admin}`} htmlFor={user.id}>
+                                <span key={user.id} className={`d-flex ${user.isActive ? '' : styles['disable-user']}`}>
+                                    <img
+                                        className={`${styles['user-img']} shadow-sm border border-light m-3`}
+                                        src={user.avatar || avatarDefault}
+                                        alt="user"
+                                        width="200"
+                                    />
 
-                                <div className="card-body">
-                                    <h5 className="card-title">{user.email}</h5>
-                                    <h6 className="card-text">
-                                        {user.fName} {user.lName}
-                                    </h6>
-                                    <p className="card-text">
-                                        {`${user.city}${user.city && user.country ? ', ' : ''}${user.country} `}
-                                    </p>
-                                    <div className="d-flex justify-content-end">
-                                        <Button
-                                            variant="warning"
-                                            onClick={() => {
-                                                handleActivateUser(user);
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={user.isActive ? faToggleOn : faToggleOff} />
-                                        </Button>
+                                    <div className="card-body">
+                                        <h5 className="card-title">{user.email}</h5>
+                                        <h6 className="card-text">
+                                            {user.fName} {user.lName}
+                                        </h6>
+                                        <p className="card-text">
+                                            {`${user.city}${user.city && user.country ? ', ' : ''}${user.country} `}
+                                        </p>
+                                        <div className="d-flex justify-content-end">
+                                            <Button
+                                                variant="warning"
+                                                onClick={() => {
+                                                    handleActivateUser(user);
+                                                }}
+                                            >
+                                                <FontAwesomeIcon icon={user.isActive ? faToggleOn : faToggleOff} />
+                                            </Button>
 
-                                        <Link
-                                            to={`/admin/users/update/${user.id}`}
-                                            className={`btn ${styles['btn-update']}`}
-                                        >
-                                            <FontAwesomeIcon icon={faPen} />
-                                        </Link>
-                                        <Button
-                                            variant="danger"
-                                            onClick={() => {
-                                                setUserToDelete(user);
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </Button>
+                                            <Link
+                                                to={`/admin/users/update/${user.id}`}
+                                                className={`btn ${styles['btn-update']}`}
+                                            >
+                                                <FontAwesomeIcon icon={faPen} />
+                                            </Link>
+                                            <Button
+                                                variant="danger"
+                                                onClick={() => {
+                                                    setUserToDelete(user);
+                                                }}
+                                            >
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </Button>
+                                        </div>
                                     </div>
-                                </div>
+                                </span>
                             </div>
                         </div>
                     ))}

@@ -11,20 +11,28 @@ import AddUpdateCalendarEvents from './CalendarEvents/AddUpdateCalendarEvents';
 import {useContext} from 'react';
 import {FirebaseContext} from '../../utils/firebase/FirebaseContext';
 import {useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 
 export default function AdminDashboard() {
     const firebase = useContext(FirebaseContext);
     const db = firebase.firestore();
 
     const history = useHistory();
+    const location = useLocation();
 
     const [show, setShow] = useState(false);
     const [calendarEvents, setCalendarEvents] = useState([]);
 
     useEffect(() => {
+        if (new URLSearchParams(location.search).get('id') || new URLSearchParams(location.search).get('date')) {
+            setShow(true);
+        } else {
+            setShow(false);
+        }
+    }, [location]);
+
+    useEffect(() => {
         let unsub = db.collection('calendarEvents').onSnapshot(res => {
-            console.log('test');
             const eventList = [];
             res.forEach(doc => {
                 eventList.push({id: doc.id, ...doc.data()});
@@ -35,12 +43,13 @@ export default function AdminDashboard() {
     }, [db]);
 
     const handleDateClick = e => {
-        setShow(true);
+        history.push(`/admin?date=${e.startStr}`);
+        // setShow(true);
     };
 
     const handleEventClick = e => {
         history.push(`/admin?id=${e.event.id}`);
-        setShow(true);
+        // setShow(true);
     };
 
     return (

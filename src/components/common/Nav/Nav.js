@@ -72,25 +72,53 @@ export default function Nav() {
 
                 <ul className="navbar-nav mt-2 mt-lg-0">
                     <li className="nav-item">
-                        <NavLink className="nav-link" exact to="/">
+                        <NavLink
+                            onClick={() => {
+                                toggleNav();
+                            }}
+                            className="nav-link"
+                            exact
+                            to="/"
+                        >
                             HOME <span className="sr-only">(current)</span>
                         </NavLink>
                     </li>
 
                     <li className="nav-item">
-                        <NavLink className="nav-link" exact to="/portofoliu">
+                        <NavLink
+                            onClick={() => {
+                                toggleNav();
+                            }}
+                            className="nav-link"
+                            exact
+                            to="/portofoliu"
+                        >
                             PORTOFOLIU
                         </NavLink>
                     </li>
 
                     <li className="nav-item">
-                        <NavLink className="nav-link" exact to="/oferte">
+                        <NavLink
+                            onClick={() => {
+                                toggleNav();
+                            }}
+                            className="nav-link"
+                            exact
+                            to="/oferte"
+                        >
                             OFERTE
                         </NavLink>
                     </li>
 
                     <li className="nav-item">
-                        <NavLink className="nav-link" exact to="/contact">
+                        <NavLink
+                            onClick={() => {
+                                toggleNav();
+                            }}
+                            className="nav-link"
+                            exact
+                            to="/contact"
+                        >
                             CONTACT
                         </NavLink>
                     </li>

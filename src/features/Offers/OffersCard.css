@@ -18,3 +18,18 @@
     text-align: center;
     color: #E8F0E6;
 }
+
+.public-offer-img {
+    height: 300px;
+    object-fit: cover;
+}
+
+@media (max-width: 767px) {
+    .public-card-row {
+        flex-direction: column !important;
+    }
+    .public-offer-center {
+        display: flex;
+        justify-content: center;
+    }
+}

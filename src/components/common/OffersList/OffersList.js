@@ -25,20 +25,18 @@ export default function AdminOffers({isAdmin, isPublic}) {
 
     useEffect(() => {
         let unsub;
-        unsub = db
-            .collection('offers')
-            .orderBy('offerDate', 'desc')
-            .onSnapshot(res => {
-                const offerList = [];
-                res.forEach(doc => {
-                    offerList.push({id: doc.id, ...doc.data()});
 
-                    if (isPublic && !doc.data().active) {
-                        offerList.pop({id: doc.id, ...doc.data()});
-                    }
-                });
-                setOffers(offerList);
+        const all = db.collection('offers');
+        const filtered = all.where('active', '==', true);
+        const query = isPublic ? filtered : all;
+
+        unsub = query.orderBy('offerDate', 'desc').onSnapshot(res => {
+            const offerList = [];
+            res.forEach(doc => {
+                offerList.push({id: doc.id, ...doc.data()});
             });
+            setOffers(offerList);
+        });
         return () => {
             typeof unsub === 'function' && unsub();
         };
@@ -93,16 +91,23 @@ export default function AdminOffers({isAdmin, isPublic}) {
                     {offers.map(offer => (
                         <span
                             key={offer.id}
-                            className={`my-3 col col-sm-6 col-lg-4 ${styles.center} ${
+                            className={`my-3 col col-sm-6 col-lg-4 d-flex align-items-stretch ${styles.center} ${
                                 offer.active ? '' : styles['disable-offer']
                             }`}
                         >
-                            <Card style={{width: '18rem'}} htmlFor={offer.id}>
-                                {offer.imageUrl && <Card.Img variant="top" src={offer.imageUrl} alt="offer" />}
-                                <Card.Body>
+                            <Card htmlFor={offer.id}>
+                                {offer.imageUrl && (
+                                    <Card.Img
+                                        className={styles['offer-img']}
+                                        variant="top"
+                                        src={offer.imageUrl}
+                                        alt="offer"
+                                    />
+                                )}
+                                <Card.Body className="d-flex flex-column">
                                     <Card.Title>{offer.title}</Card.Title>
                                     <Card.Text>{offer.description}</Card.Text>
-                                    <div className="d-flex justify-content-center">
+                                    <div className="d-flex mt-auto justify-content-center">
                                         <Button
                                             variant="warning"
                                             onClick={() => {

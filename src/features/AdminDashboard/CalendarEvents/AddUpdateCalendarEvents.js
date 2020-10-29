@@ -5,6 +5,8 @@ import 'firebase/storage';
 
 import moment from 'moment';
 
+import 'react-datepicker/dist/react-datepicker.css';
+
 import {Modal, Button} from 'react-bootstrap';
 import {AuthContext} from '../../Auth/AuthContext';
 import {useHistory, useLocation} from 'react-router-dom';
@@ -24,6 +26,8 @@ export default function AddUpdateCalendarEvents(props) {
 
     useEffect(() => {
         setId(new URLSearchParams(location.search).get('id'));
+        const date = new URLSearchParams(location.search).get('date');
+        setInitialValues(i => ({...i, start: date || moment().format('YYYY-MM-DD')}));
     }, [location]);
 
     const [file, setFile] = useState('');
@@ -33,10 +37,10 @@ export default function AddUpdateCalendarEvents(props) {
             title: '',
             description: '',
             imageUrl: '',
-            start: '',
+            start: new Date(),
             allDay: true,
         });
-        props.setShow(false);
+        // props.setShow(false);
         history.push('/admin');
     };
 
@@ -44,13 +48,14 @@ export default function AddUpdateCalendarEvents(props) {
         title: '',
         description: '',
         imageUrl: '',
-        start: moment().format(),
+        start: new Date(),
         allDay: true,
     });
 
     const validationRules = {
         title: [{type: 'required'}],
         description: [{type: 'required'}],
+        start: [{type: 'required'}],
     };
 
     const [calendarEvent, errors, bindInput, isFormValid] = useForm(initialValues, validationRules);
@@ -97,7 +102,7 @@ export default function AddUpdateCalendarEvents(props) {
                     title: calendarEvent.title,
                     description: calendarEvent.description,
                     imageUrl: imageUrl,
-                    start: moment().format(),
+                    start: moment(calendarEvent.start).format('YYYY-MM-DD'),
                     allDay: true,
                 });
 
@@ -115,7 +120,7 @@ export default function AddUpdateCalendarEvents(props) {
         handleClose();
     }
 
-    async function handleUpdateCalendarEvent(item) {
+    async function handleUpdateCalendarEvent() {
         if (!isFormValid()) {
             return;
         }
@@ -125,10 +130,11 @@ export default function AddUpdateCalendarEvents(props) {
                 .collection('calendarEvents')
                 .doc(id)
                 .update({
-                    ...item,
-                    title: item.title,
-                    description: item.description,
-                    imageUrl: item.imageUrl,
+                    ...calendarEvent,
+                    title: calendarEvent.title,
+                    description: calendarEvent.description,
+                    start: moment(calendarEvent.start).format('YYYY-MM-DD'),
+                    imageUrl: calendarEvent.imageUrl,
                 });
 
             setAlertMessage({
@@ -143,6 +149,23 @@ export default function AddUpdateCalendarEvents(props) {
             });
         }
         handleClose();
+    }
+
+    async function handleDeleteCalendarEvent() {
+        handleClose();
+
+        try {
+            await db.collection('calendarEvents').doc(id).delete();
+            setAlertMessage({
+                message: 'Event successfully deleted',
+                type: 'success',
+            });
+        } catch (error) {
+            setAlertMessage({
+                message: error.message,
+                type: 'danger',
+            });
+        }
     }
 
     return (
@@ -186,6 +209,12 @@ export default function AddUpdateCalendarEvents(props) {
                                         value={calendarEvent.title}
                                         {...bindInput('title')}
                                     />
+                                    <input
+                                        name="calendar"
+                                        type="date"
+                                        value={calendarEvent?.start}
+                                        {...bindInput('start')}
+                                    />
                                 </div>
 
                                 <div className="input-group">
@@ -205,12 +234,17 @@ export default function AddUpdateCalendarEvents(props) {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
+                    {id && (
+                        <Button className="mr-auto" variant="danger" onClick={handleDeleteCalendarEvent}>
+                            Delete
+                        </Button>
+                    )}
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
                     <Button
                         variant="primary"
-                        onClick={id ? () => handleUpdateCalendarEvent(calendarEvent) : handleAddCalendarEvent}
+                        onClick={id ? handleUpdateCalendarEvent : handleAddCalendarEvent}
                         disabled={!calendarEvent.title}
                     >
                         Save Changes

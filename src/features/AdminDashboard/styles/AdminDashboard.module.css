@@ -51,18 +51,19 @@
     height: 200px;
     border-radius: 100px;
     place-self: center;
+    object-fit: cover;
 }
 
 .admin .offer-img {
-    height: 200px;
-    border-radius: 100px;
-    place-self: center;
+    height: 300px;
+    object-fit: cover;
 }
 
 .admin .review-img {
     height: 200px;
     border-radius: 100px;
     place-self: center;
+    object-fit: cover;
 }
 
 .admin .card-row {
@@ -78,6 +79,10 @@
 }
 
 .admin .disable-offer {
+    opacity: 0.3;
+}
+
+.disable-user {
     opacity: 0.3;
 }
 
