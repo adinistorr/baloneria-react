@@ -13,13 +13,18 @@ export const AlertMessageContext = React.createContext({
 
 export default function AlertMessageContextProvider({children}) {
     const [alert, setAlert] = useState();
+
+    function displayAlertMessage(alert) {
+        setAlert(alert);
+        setTimeout(() => {
+            setAlert(null);
+        }, 3000);
+    }
+
     return (
-        <AlertMessageContext.Provider value={{alert: alert, setAlertMessage: setAlert}}>
+        <AlertMessageContext.Provider value={{alert: alert, setAlertMessage: displayAlertMessage}}>
             {alert && (
                 <div className={styles.alertMessageWrapper}>
-                    {setTimeout(() => {
-                        setAlert(null);
-                    }, 5000)}
                     <Alert className={styles.alertMessage} variant={alert.type}>
                         {alert.message}
                     </Alert>

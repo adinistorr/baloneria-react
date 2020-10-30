@@ -91,7 +91,6 @@ export default function UpdateUser() {
                 type: 'success',
             });
         } catch (error) {
-            // The document probably doesn't exist.
             setAlertMessage({
                 message: error.message,
                 type: 'danger',

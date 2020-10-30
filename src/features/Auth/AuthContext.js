@@ -18,25 +18,13 @@ function AuthContextProvider({children}) {
 
     useEffect(() => {
         const unsub = firebase.auth().onAuthStateChanged(user => {
-            // let newValues = initialValue;
-
             if (user) {
-                // User is signed in.
-                // newValues = {
-                //     isAuthenticated: true,
-                //     isAdmin: false,
-                //     isActive: false,
-                //     loading: true,
-                //     user,
-                // };
-
                 firebase
                     .firestore()
                     .collection('users')
                     .doc(user.uid)
                     .get()
                     .then(function (doc) {
-                        // console.log('Document: ', doc.data());
                         setValue({
                             isAuthenticated: true,
                             isAdmin: doc.data().isAdmin,
@@ -62,8 +50,6 @@ function AuthContextProvider({children}) {
                     loading: false,
                 });
             }
-            // console.log(` New values:`, newValues);
-            // setValue(newValues);
         });
         return unsub;
     }, [firebase]);

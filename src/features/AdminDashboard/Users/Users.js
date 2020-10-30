@@ -11,7 +11,6 @@ import {AuthContext} from '../../Auth/AuthContext';
 import DeleteModal from '../../../components/common/DeleteModal';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPen, faTrash, faToggleOn, faToggleOff} from '@fortawesome/free-solid-svg-icons';
-// import styles from '../styles/AdminDashboard.module.css';
 import styles from '../styles/AdminDashboard.module.css';
 import avatarDefault from '../../../assets/images/avatar-default.png';
 import {AlertMessageContext} from '../../../components/common/AlertMessageContext/AlertMessageContext';
